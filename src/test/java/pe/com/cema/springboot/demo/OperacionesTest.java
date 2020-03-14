@@ -16,7 +16,7 @@ public class OperacionesTest {
     private OperationRestController operationRestController;
 
     @Test
-    public void testWhenSumTwoNumbersThenResultIsFive() {
+    void testWhenSumTwoNumbersThenResultIsFive() {
         final OperationBean operationBean = OperationBean.builder().operator("suma")
                 .numbers(new BigDecimal[]{
                         new BigDecimal("1"),
@@ -27,7 +27,7 @@ public class OperacionesTest {
     }
 
     @Test
-    public void testWhenSubtractTwoNumbersThenResultIsThree(){
+    void testWhenSubtractTwoNumbersThenResultIsThree() {
         final OperationBean operationBean = OperationBean.builder().operator("resta")
                 .numbers(new BigDecimal[]{
                         new BigDecimal("7"),
@@ -38,7 +38,7 @@ public class OperacionesTest {
     }
 
     @Test
-    public void testWhenSubtractThreeNumbersThenResultIsOne(){
+    void testWhenSubtractThreeNumbersThenResultIsOne() {
         final OperationBean operationBean = OperationBean.builder().operator("resta")
                 .numbers(new BigDecimal[]{
                         new BigDecimal("7"),
@@ -47,5 +47,26 @@ public class OperacionesTest {
                 }).build();
         BigDecimal resultado = operationRestController.makeOperation(operationBean);
         Assertions.assertEquals(new BigDecimal("1"), resultado);
+    }
+
+    @Test
+    void testWhenSendInvalidOperatorThrowsIllegalArgumentException() {
+        final OperationBean operationBean = OperationBean.builder().operator("multiplicacion")
+                .build();
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> operationRestController.makeOperation(operationBean), "Se produjo excepción");
+    }
+
+    @Test
+    void testWhenSendBlankOperationThrowsIllegalArgumentException() {
+        final OperationBean operationBean = OperationBean.builder().operator("")
+                .build();
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> operationRestController.makeOperation(operationBean), "Se produjo excepción");
+    }
+
+    @Test
+    void testWhenListOperationsThenReturnTwoElements() {
+        Assertions.assertTrue(operationRestController.listOperation().size() == 2);
     }
 }

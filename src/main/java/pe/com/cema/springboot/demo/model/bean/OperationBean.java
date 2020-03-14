@@ -2,17 +2,16 @@ package pe.com.cema.springboot.demo.model.bean;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
 
 import java.math.BigDecimal;
 
-@Data
-@NoArgsConstructor
+@Getter
 @AllArgsConstructor
 @Builder
 public class OperationBean {
 
     private String operator;
     private BigDecimal[] numbers;
+
 }
